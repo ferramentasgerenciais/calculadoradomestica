@@ -11,10 +11,50 @@
   <meta name="author" content="Ferramentas Gerenciais" />
   <meta name="robots" content="index, follow" />
   
-  <!-- Open Graph -->
+  <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Calculadora de Gastos Domésticos" />
-  <meta property="og:description" content="Controle seus gastos familiares de forma simples e organizada" />
+  <meta property="og:title" content="Calculadora de Gastos Domésticos - Controle Financeiro Familiar" />
+  <meta property="og:description" content="Calculadora gratuita para controlar gastos domésticos. Organize o orçamento familiar, divida contas e acompanhe despesas mensais facilmente." />
+  <meta property="og:url" content="https://ferramentasgerenciais.github.io/CalculadoraGastosDomesticos/" />
+  <meta property="og:image" content="https://ferramentasgerenciais.github.io/CalculadoraGastosDomesticos/og-image.png" />
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Calculadora de Gastos Domésticos - Controle Financeiro Familiar" />
+  <meta name="twitter:description" content="Calculadora gratuita para controlar gastos domésticos e receitas familiares." />
+  <meta name="twitter:image" content="https://ferramentasgerenciais.github.io/CalculadoraGastosDomesticos/og-image.png" />
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://ferramentasgerenciais.github.io/CalculadoraGastosDomesticos/" />
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#6C8794" />
+  
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculadora de Gastos Domésticos",
+    "description": "Calculadora gratuita para controle financeiro familiar com receitas e despesas",
+    "url": "https://ferramentasgerenciais.github.io/CalculadoraGastosDomesticos/",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "BRL"
+    },
+    "featureList": [
+      "Controle de gastos domésticos",
+      "Gerenciamento de receitas",
+      "Cálculo de saldo familiar",
+      "Exportação para Excel e PDF",
+      "Categorização de despesas"
+    ]
+  }
+  </script>
   
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="calculadora.png" />
@@ -456,6 +496,28 @@
       left: 0;
     }
 
+    .seo-content {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 30px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      text-align: left;
+      line-height: 1.6;
+    }
+
+    .seo-content h2 {
+      color: #6C8794;
+      margin-top: 30px;
+      margin-bottom: 15px;
+    }
+
+    .seo-content p {
+      margin-bottom: 15px;
+      color: #555;
+    }
+
     @media (max-width: 768px) {
       .container {
         flex-direction: column;
@@ -604,6 +666,23 @@
         <div class="tip-item">Compare preços antes de fazer grandes compras</div>
         <div class="tip-item">Estabeleça metas de economia para cada categoria</div>
         <div class="tip-item">Use aplicativos de cashback e cupons de desconto</div>
+      </div>
+
+      <!-- Conteúdo SEO -->
+      <div class="seo-content">
+        <h2>Calculadora de Gastos Domésticos Gratuita</h2>
+        <p>Nossa calculadora de gastos domésticos é a ferramenta perfeita para famílias que desejam ter controle total sobre suas finanças. Com ela, você pode gerenciar tanto receitas quanto despesas, categorizando cada item para uma visão clara do orçamento familiar.</p>
+        
+        <h2>Como Usar a Calculadora Financeira</h2>
+        <p><strong>Receitas:</strong> Adicione salários, freelances, investimentos e outras fontes de renda com data e categoria.</p>
+        <p><strong>Despesas:</strong> Registre gastos com moradia, alimentação, transporte, saúde, educação e lazer.</p>
+        <p><strong>Saldo:</strong> Visualize automaticamente o saldo final (receitas - despesas) para saber se está no azul ou vermelho.</p>
+        
+        <h2>Funcionalidades da Calculadora</h2>
+        <p>Além do controle básico, nossa ferramenta oferece exportação para Excel (CSV) e PDF, permitindo gerar relatórios profissionais do orçamento familiar. Os dados são salvos automaticamente no navegador para sua comodidade.</p>
+        
+        <h2>Categorias de Gastos Domésticos</h2>
+        <p>Organize suas despesas nas principais categorias: Moradia (aluguel, financiamento, condomínio), Alimentação (supermercado, restaurantes), Transporte (combustível, transporte público), Saúde (planos, medicamentos), Educação (escola, cursos), Lazer (cinema, viagens) e Vestuário.</p>
       </div>
     </div>
 

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ferramentasgerenciais.github.io/CalculadoraGastosDomesticos/sitemap.xml
