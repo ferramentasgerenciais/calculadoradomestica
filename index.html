@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- SEO Meta Tags -->
+  <title>Calculadora de Gastos Domésticos - Controle Financeiro Familiar</title>
+  <meta name="description" content="Calculadora gratuita para controlar gastos domésticos. Organize o orçamento familiar, divida contas e acompanhe despesas mensais facilmente." />
+  <meta name="keywords" content="gastos domésticos, orçamento familiar, controle financeiro, calculadora despesas, planilha gastos" />
+  <meta name="author" content="Ferramentas Gerenciais" />
+  <meta name="robots" content="index, follow" />
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Calculadora de Gastos Domésticos" />
+  <meta property="og:description" content="Controle seus gastos familiares de forma simples e organizada" />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="calculadora.png" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #6C8794 0%, #4a5c66 100%);
+      color: #333;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      max-width: 1400px;
+      margin: 0 auto;
+      gap: 30px;
+      align-items: flex-start;
+    }
+
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .sidebar {
+      width: 320px;
+      position: sticky;
+      top: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      width: 100%;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .header .subtitle {
+      color: rgba(255,255,255,0.9);
+      font-size: 1.2rem;
+      font-weight: 300;
+    }
+
+    .calculator-card {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 800px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      color: #6C8794;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 10px;
+    }
+
+    .expense-form {
+      margin-bottom: 20px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 15px;
+      margin-bottom: 15px;
+      align-items: end;
+    }
+
+    .form-row:last-child {
+      grid-template-columns: 1fr 1.5fr auto;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .input-label {
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 5px;
+      font-size: 0.9rem;
+    }
+
+    .input-field, .select-field {
+      padding: 12px 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .input-field:focus, .select-field:focus {
+      outline: none;
+      border-color: #6C8794;
+    }
+
+    .add-button {
+      background: linear-gradient(135deg, #6C8794, #4a5c66);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.2s ease;
+    }
+
+    .add-button:hover {
+      transform: translateY(-2px);
+    }
+
+    .expenses-list {
+      margin-bottom: 30px;
+    }
+
+    .expense-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      border-left: 4px solid #6C8794;
+    }
+
+    .expense-info {
+      flex: 1;
+    }
+
+    .expense-name {
+      font-weight: 600;
+      color: #333;
+    }
+
+    .expense-category {
+      font-size: 0.8rem;
+      color: #666;
+      text-transform: uppercase;
+    }
+
+    .expense-value {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #6C8794;
+    }
+
+    .delete-button {
+      background: #ff4757;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+
+    .summary-card {
+      background: white;
+      color: #333;
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .summary-title {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      opacity: 0.9;
+    }
+
+    .summary-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .category-breakdown {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .category-item {
+      background: rgba(255,255,255,0.1);
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .category-name {
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+      opacity: 0.8;
+    }
+
+    .category-value {
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+
+    .export-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 25px;
+    }
+
+    .export-button {
+      background: linear-gradient(135deg, #6C8794, #4a5c66);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .export-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(108, 135, 148, 0.4);
+    }
+
+    .income-form {
+      margin-bottom: 20px;
+    }
+
+    .financial-summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+
+    .summary-item {
+      text-align: center;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      border: 1px solid #e0e0e0;
+    }
+
+    .summary-item.saldo {
+      background: #f0f8ff;
+      border: 2px solid #6C8794;
+    }
+
+    .summary-value.income {
+      color: #4CAF50;
+    }
+
+    .summary-value.expense {
+      color: #f44336;
+    }
+
+    .summary-value.balance {
+      font-size: 2rem;
+    }
+
+    .income-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      background: #e8f5e8;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      border-left: 4px solid #4CAF50;
+    }
+
+    .income-value {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #4CAF50;
+    }
+
+    .donation-card {
+      background: linear-gradient(135deg, #2d3436 0%, #636e72 100%);
+      padding: 25px;
+      border-radius: 16px;
+      width: 100%;
+      text-align: center;
+      color: white;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    }
+
+    .donation-header h2 {
+      margin: 0 0 8px 0;
+      font-size: 24px;
+      background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: rainbow 2s ease-in-out infinite;
+    }
+
+    @keyframes rainbow {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .donation-subtitle {
+      color: #ddd;
+      margin: 0 0 20px 0;
+      font-size: 14px;
+    }
+
+    .donation-icon {
+      font-size: 40px;
+      margin-bottom: 15px;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+
+    .donation-text {
+      color: #fff;
+      margin: 15px 0 10px 0;
+      font-weight: bold;
+    }
+
+    .donation-benefits {
+      list-style: none;
+      padding: 0;
+      margin: 15px 0 25px 0;
+      text-align: left;
+    }
+
+    .donation-benefits li {
+      padding: 5px 0;
+      color: #b8e6b8;
+      font-size: 14px;
+    }
+
+    .donation-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(45deg, #00d4aa, #00b894);
+      color: white;
+      text-decoration: none;
+      padding: 15px 30px;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,212,170,0.4);
+      margin: 10px 0;
+    }
+
+    .donation-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0,212,170,0.6);
+    }
+
+    .button-icon {
+      font-size: 20px;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .button-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .button-text small {
+      font-size: 12px;
+      opacity: 0.9;
+      font-weight: normal;
+    }
+
+    .donation-footer {
+      color: #ffd93d;
+      margin: 15px 0 0 0;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .tips-section {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      margin-top: 20px;
+    }
+
+    .tips-title {
+      color: #6C8794;
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+    }
+
+    .tip-item {
+      margin-bottom: 10px;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .tip-item::before {
+      content: "💡";
+      position: absolute;
+      left: 0;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        position: static;
+      }
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      .form-row:last-child {
+        grid-template-columns: 1fr;
+      }
+      .export-buttons {
+        flex-direction: column;
+      }
+      .add-button {
+        margin-top: 10px;
+      }
+      .header h1 {
+        font-size: 2rem;
+      }
+      .calculator-card {
+        padding: 25px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="main-content">
+      <div class="header">
+        <h1>🏠 Calculadora de Gastos Domésticos</h1>
+        <p class="subtitle">Organize seu orçamento familiar de forma simples e eficiente</p>
+      </div>
+
+      <div class="calculator-card">
+        <h2 class="section-title">Adicionar Despesa</h2>
+        <div class="expense-form">
+          <div class="form-row">
+            <div class="input-group">
+              <label class="input-label">Nome da Despesa</label>
+              <input id="expenseName" class="input-field" type="text" placeholder="Ex: Conta de luz, Supermercado..." />
+            </div>
+            <div class="input-group">
+              <label class="input-label">Data</label>
+              <input id="expenseDate" class="input-field" type="date" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="input-group">
+              <label class="input-label">Valor (R$)</label>
+              <input id="expenseValue" class="input-field" type="number" step="0.01" placeholder="0,00" />
+            </div>
+            <div class="input-group">
+              <label class="input-label">Categoria</label>
+              <select id="expenseCategory" class="select-field">
+                <option value="moradia">🏠 Moradia</option>
+                <option value="alimentacao">🍽️ Alimentação</option>
+                <option value="transporte">🚗 Transporte</option>
+                <option value="saude">🏥 Saúde</option>
+                <option value="educacao">📚 Educação</option>
+                <option value="lazer">🎬 Lazer</option>
+                <option value="vestuario">👕 Vestuário</option>
+                <option value="outros">📦 Outros</option>
+              </select>
+            </div>
+            <button class="add-button" onclick="addExpense()">Adicionar</button>
+          </div>
+        </div>
+
+        <h2 class="section-title">Suas Despesas</h2>
+        <div id="expensesList" class="expenses-list">
+          <p style="text-align: center; color: #666; font-style: italic;">Nenhuma despesa adicionada ainda</p>
+        </div>
+      </div>
+
+      <div class="calculator-card">
+        <h2 class="section-title">Adicionar Receita</h2>
+        <div class="income-form">
+          <div class="form-row">
+            <div class="input-group">
+              <label class="input-label">Fonte da Receita</label>
+              <input id="incomeName" class="input-field" type="text" placeholder="Ex: Salário, Freelance, Aluguel..." />
+            </div>
+            <div class="input-group">
+              <label class="input-label">Data</label>
+              <input id="incomeDate" class="input-field" type="date" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="input-group">
+              <label class="input-label">Valor (R$)</label>
+              <input id="incomeValue" class="input-field" type="number" step="0.01" placeholder="0,00" />
+            </div>
+            <div class="input-group">
+              <label class="input-label">Tipo</label>
+              <select id="incomeType" class="select-field">
+                <option value="salario">💼 Salário</option>
+                <option value="freelance">💻 Freelance</option>
+                <option value="investimento">📈 Investimento</option>
+                <option value="aluguel">🏠 Aluguel</option>
+                <option value="vendas">💰 Vendas</option>
+                <option value="outros">📦 Outros</option>
+              </select>
+            </div>
+            <button class="add-button" onclick="addIncome()">Adicionar</button>
+          </div>
+        </div>
+
+        <h2 class="section-title">Suas Receitas</h2>
+        <div id="incomesList" class="expenses-list">
+          <p style="text-align: center; color: #666; font-style: italic;">Nenhuma receita adicionada ainda</p>
+        </div>
+      </div>
+
+      <div class="summary-card">
+        <div class="financial-summary">
+          <div class="summary-item">
+            <div class="summary-title">Total Receitas</div>
+            <div id="totalIncome" class="summary-value income">R$ 0,00</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-title">Total Despesas</div>
+            <div id="totalExpenses" class="summary-value expense">R$ 0,00</div>
+          </div>
+          <div class="summary-item saldo">
+            <div class="summary-title">Saldo Final</div>
+            <div id="finalBalance" class="summary-value balance">R$ 0,00</div>
+          </div>
+        </div>
+        
+        <div id="categoryBreakdown" class="category-breakdown"></div>
+        
+        <div class="export-buttons">
+          <button class="export-button" onclick="exportToExcel()">📊 Exportar Excel</button>
+          <button class="export-button" onclick="exportToPDF()">📄 Exportar PDF</button>
+        </div>
+      </div>
+
+      <div class="tips-section">
+        <h3 class="tips-title">Dicas para Economizar</h3>
+        <div class="tip-item">Revise suas contas mensalmente e negocie melhores preços</div>
+        <div class="tip-item">Faça uma lista de compras e evite compras por impulso</div>
+        <div class="tip-item">Compare preços antes de fazer grandes compras</div>
+        <div class="tip-item">Estabeleça metas de economia para cada categoria</div>
+        <div class="tip-item">Use aplicativos de cashback e cupons de desconto</div>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="donation-card">
+        <div class="donation-header">
+          <h2>❤️ Apoie Este Projeto</h2>
+          <p class="donation-subtitle">Mantenha esta ferramenta gratuita para todas as famílias!</p>
+        </div>
+        
+        <div class="donation-icon">💰</div>
+        <p class="donation-text">Sua doação nos ajuda a:</p>
+        <ul class="donation-benefits">
+          <li>✅ Manter o site sempre online</li>
+          <li>✅ Adicionar novas funcionalidades</li>
+          <li>✅ Criar mais ferramentas úteis</li>
+          <li>✅ Melhorar a experiência do usuário</li>
+        </ul>
+        
+        <a href="http://link.mercadopago.com.br/gastosdomesticos" target="_blank" class="donation-button">
+          <span class="button-icon">🎁</span>
+          <span class="button-text">
+            <strong>DOAR AGORA</strong>
+            <small>Via Mercado Pago</small>
+          </span>
+        </a>
+        
+        <p class="donation-footer">Qualquer valor faz a diferença! 🙏</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let expenses = [];
+    let incomes = [];
+    const categories = {
+      moradia: { name: '🏠 Moradia', total: 0 },
+      alimentacao: { name: '🍽️ Alimentação', total: 0 },
+      transporte: { name: '🚗 Transporte', total: 0 },
+      saude: { name: '🏥 Saúde', total: 0 },
+      educacao: { name: '📚 Educação', total: 0 },
+      lazer: { name: '🎬 Lazer', total: 0 },
+      vestuario: { name: '👕 Vestuário', total: 0 },
+      outros: { name: '📦 Outros', total: 0 }
+    };
+    const incomeTypes = {
+      salario: { name: '💼 Salário' },
+      freelance: { name: '💻 Freelance' },
+      investimento: { name: '📈 Investimento' },
+      aluguel: { name: '🏠 Aluguel' },
+      vendas: { name: '💰 Vendas' },
+      outros: { name: '📦 Outros' }
+    };
+
+    function addExpense() {
+      const name = document.getElementById('expenseName').value.trim();
+      const date = document.getElementById('expenseDate').value;
+      const value = parseFloat(document.getElementById('expenseValue').value);
+      const category = document.getElementById('expenseCategory').value;
+
+      if (!name || !date || !value || value <= 0) {
+        alert('Por favor, preencha todos os campos corretamente!');
+        return;
+      }
+
+      const expense = {
+        id: Date.now(),
+        name,
+        date,
+        value,
+        category
+      };
+
+      expenses.push(expense);
+      updateDisplay();
+      clearForm();
+    }
+
+    function removeExpense(id) {
+      expenses = expenses.filter(expense => expense.id !== id);
+      updateDisplay();
+    }
+
+    function addIncome() {
+      const name = document.getElementById('incomeName').value.trim();
+      const date = document.getElementById('incomeDate').value;
+      const value = parseFloat(document.getElementById('incomeValue').value);
+      const type = document.getElementById('incomeType').value;
+
+      if (!name || !date || !value || value <= 0) {
+        alert('Por favor, preencha todos os campos corretamente!');
+        return;
+      }
+
+      const income = {
+        id: Date.now(),
+        name,
+        date,
+        value,
+        type
+      };
+
+      incomes.push(income);
+      updateDisplay();
+      clearIncomeForm();
+    }
+
+    function removeIncome(id) {
+      incomes = incomes.filter(income => income.id !== id);
+      updateDisplay();
+    }
+
+    function updateDisplay() {
+      updateExpensesList();
+      updateIncomesList();
+      updateSummary();
+    }
+
+    function updateExpensesList() {
+      const container = document.getElementById('expensesList');
+      
+      if (expenses.length === 0) {
+        container.innerHTML = '<p style="text-align: center; color: #666; font-style: italic;">Nenhuma despesa adicionada ainda</p>';
+        return;
+      }
+
+      container.innerHTML = expenses.map(expense => `
+        <div class="expense-item">
+          <div class="expense-info">
+            <div class="expense-name">${expense.name}</div>
+            <div class="expense-category">${categories[expense.category].name} • ${new Date(expense.date).toLocaleDateString('pt-BR')}</div>
+          </div>
+          <div class="expense-value">R$ ${expense.value.toFixed(2).replace('.', ',')}</div>
+          <button class="delete-button" onclick="removeExpense(${expense.id})">Remover</button>
+        </div>
+      `).join('');
+    }
+
+    function updateIncomesList() {
+      const container = document.getElementById('incomesList');
+      
+      if (incomes.length === 0) {
+        container.innerHTML = '<p style="text-align: center; color: #666; font-style: italic;">Nenhuma receita adicionada ainda</p>';
+        return;
+      }
+
+      container.innerHTML = incomes.map(income => `
+        <div class="income-item">
+          <div class="expense-info">
+            <div class="expense-name">${income.name}</div>
+            <div class="expense-category">${incomeTypes[income.type].name} • ${new Date(income.date).toLocaleDateString('pt-BR')}</div>
+          </div>
+          <div class="income-value">R$ ${income.value.toFixed(2).replace('.', ',')}</div>
+          <button class="delete-button" onclick="removeIncome(${income.id})">Remover</button>
+        </div>
+      `).join('');
+    }
+
+    function updateSummary() {
+      // Reset category totals
+      Object.keys(categories).forEach(key => {
+        categories[key].total = 0;
+      });
+
+      // Calculate expense totals
+      const totalExpenses = expenses.reduce((sum, expense) => {
+        categories[expense.category].total += expense.value;
+        return sum + expense.value;
+      }, 0);
+
+      // Calculate income total
+      const totalIncome = incomes.reduce((sum, income) => sum + income.value, 0);
+
+      // Calculate balance
+      const balance = totalIncome - totalExpenses;
+
+      // Update displays
+      document.getElementById('totalExpenses').textContent = `R$ ${totalExpenses.toFixed(2).replace('.', ',')}`;;
+      document.getElementById('totalIncome').textContent = `R$ ${totalIncome.toFixed(2).replace('.', ',')}`;;
+      
+      const balanceElement = document.getElementById('finalBalance');
+      balanceElement.textContent = `R$ ${balance.toFixed(2).replace('.', ',')}`;;
+      balanceElement.style.color = balance >= 0 ? '#4CAF50' : '#f44336';
+
+      // Update category breakdown
+      const breakdown = document.getElementById('categoryBreakdown');
+      const activeCategories = Object.entries(categories)
+        .filter(([key, cat]) => cat.total > 0)
+        .map(([key, cat]) => `
+          <div class="category-item">
+            <div class="category-name">${cat.name}</div>
+            <div class="category-value">R$ ${cat.total.toFixed(2).replace('.', ',')}</div>
+          </div>
+        `).join('');
+
+      breakdown.innerHTML = activeCategories || '<p style="opacity: 0.7;">Adicione despesas para ver o resumo por categoria</p>';
+    }
+
+    function clearForm() {
+      document.getElementById('expenseName').value = '';
+      document.getElementById('expenseDate').value = new Date().toISOString().split('T')[0];
+      document.getElementById('expenseValue').value = '';
+      document.getElementById('expenseCategory').value = 'moradia';
+    }
+
+    function clearIncomeForm() {
+      document.getElementById('incomeName').value = '';
+      document.getElementById('incomeDate').value = new Date().toISOString().split('T')[0];
+      document.getElementById('incomeValue').value = '';
+      document.getElementById('incomeType').value = 'salario';
+    }
+
+    // Definir data atual como padrão ao carregar
+    window.addEventListener('load', function() {
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('expenseDate').value = today;
+      document.getElementById('incomeDate').value = today;
+    });
+
+    // Allow adding expense with Enter key
+    document.getElementById('expenseName').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') addExpense();
+    });
+
+    document.getElementById('expenseValue').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') addExpense();
+    });
+
+    // Load saved data on page load
+    window.addEventListener('load', function() {
+      const savedExpenses = localStorage.getItem('domesticExpenses');
+      const savedIncomes = localStorage.getItem('domesticIncomes');
+      if (savedExpenses) {
+        expenses = JSON.parse(savedExpenses);
+      }
+      if (savedIncomes) {
+        incomes = JSON.parse(savedIncomes);
+      }
+      updateDisplay();
+    });
+
+    // Save data when expenses/incomes change
+    function saveData() {
+      localStorage.setItem('domesticExpenses', JSON.stringify(expenses));
+      localStorage.setItem('domesticIncomes', JSON.stringify(incomes));
+    }
+
+    // Override addExpense and removeExpense to save data
+    const originalAddExpense = addExpense;
+    const originalRemoveExpense = removeExpense;
+
+    addExpense = function() {
+      originalAddExpense();
+      saveData();
+    };
+
+    removeExpense = function(id) {
+      originalRemoveExpense(id);
+      saveData();
+    };
+
+    // Override income functions to save data
+    const originalAddIncome = addIncome;
+    const originalRemoveIncome = removeIncome;
+
+    addIncome = function() {
+      originalAddIncome();
+      saveData();
+    };
+
+    removeIncome = function(id) {
+      originalRemoveIncome(id);
+      saveData();
+    };
+
+    function exportToExcel() {
+      if (expenses.length === 0 && incomes.length === 0) {
+        alert('Adicione algumas receitas ou despesas antes de exportar!');
+        return;
+      }
+
+      let csvContent = "data:text/csv;charset=utf-8,";
+      
+      // Cabeçalho
+      csvContent += "RELATÓRIO FINANCEIRO DOMÉSTICO\n";
+      csvContent += `Gerado em: ${new Date().toLocaleDateString('pt-BR')}\n\n`;
+      
+      // Receitas
+      if (incomes.length > 0) {
+        csvContent += "RECEITAS:\n";
+        csvContent += "Descrição,Tipo,Data,Valor\n";
+        incomes.forEach(income => {
+          const typeName = incomeTypes[income.type].name.replace(/🔤[\udf00-\udfff]|🔤[\udc00-\ude4f]|🔤[\ude80-\udeff]|🔤[\udd00-\uddff]/g, '').trim();
+          csvContent += `"${income.name}","${typeName}","${new Date(income.date).toLocaleDateString('pt-BR')}","R$ ${income.value.toFixed(2).replace('.', ',')}"\n`;
+        });
+        const totalIncome = incomes.reduce((sum, income) => sum + income.value, 0);
+        csvContent += `"TOTAL RECEITAS","","","R$ ${totalIncome.toFixed(2).replace('.', ',')}"\n\n`;
+      }
+      
+      // Despesas
+      if (expenses.length > 0) {
+        csvContent += "DESPESAS:\n";
+        csvContent += "Descrição,Categoria,Data,Valor\n";
+        expenses.forEach(expense => {
+          const categoryName = categories[expense.category].name.replace(/🔤[\udf00-\udfff]|🔤[\udc00-\ude4f]|🔤[\ude80-\udeff]|🔤[\udd00-\uddff]/g, '').trim();
+          csvContent += `"${expense.name}","${categoryName}","${new Date(expense.date).toLocaleDateString('pt-BR')}","R$ ${expense.value.toFixed(2).replace('.', ',')}"\n`;
+        });
+        const totalExpenses = expenses.reduce((sum, expense) => sum + expense.value, 0);
+        csvContent += `"TOTAL DESPESAS","","","R$ ${totalExpenses.toFixed(2).replace('.', ',')}"\n\n`;
+      }
+      
+      // Resumo
+      const totalIncome = incomes.reduce((sum, income) => sum + income.value, 0);
+      const totalExpenses = expenses.reduce((sum, expense) => sum + expense.value, 0);
+      const balance = totalIncome - totalExpenses;
+      
+      csvContent += "RESUMO FINANCEIRO:\n";
+      csvContent += `"Total Receitas","","","R$ ${totalIncome.toFixed(2).replace('.', ',')}"\n`;
+      csvContent += `"Total Despesas","","","R$ ${totalExpenses.toFixed(2).replace('.', ',')}"\n`;
+      csvContent += `"SALDO FINAL","","","R$ ${balance.toFixed(2).replace('.', ',')}"\n`;
+      
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `relatorio-financeiro-${new Date().toLocaleDateString('pt-BR').replace(/\//g, '-')}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function exportToPDF() {
+      if (expenses.length === 0 && incomes.length === 0) {
+        alert('Adicione algumas receitas ou despesas antes de exportar!');
+        return;
+      }
+
+      const printWindow = window.open('', '_blank');
+      const totalIncome = incomes.reduce((sum, income) => sum + income.value, 0);
+      const totalExpenses = expenses.reduce((sum, expense) => sum + expense.value, 0);
+      const balance = totalIncome - totalExpenses;
+      
+      let html = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Relatório Financeiro Doméstico</title>
+          <style>
+            body { font-family: Arial, sans-serif; margin: 40px; color: #333; }
+            .header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #6C8794; padding-bottom: 20px; }
+            .header h1 { color: #6C8794; margin: 0; }
+            .header p { color: #666; margin: 5px 0 0 0; }
+            .summary { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
+            .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; text-align: center; }
+            .summary-item h3 { margin: 0 0 10px 0; color: #6C8794; }
+            .summary-item .value { font-size: 1.5rem; font-weight: bold; }
+            .income { color: #4CAF50; }
+            .expense { color: #f44336; }
+            .balance { color: ${balance >= 0 ? '#4CAF50' : '#f44336'}; }
+            .section { margin-bottom: 30px; }
+            .section h2 { color: #6C8794; border-bottom: 1px solid #ddd; padding-bottom: 10px; }
+            .table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+            .table th, .table td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+            .table th { background: #6C8794; color: white; }
+            .table tr:nth-child(even) { background: #f8f9fa; }
+            .footer { margin-top: 40px; text-align: center; color: #666; font-size: 0.9rem; }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <h1>Relatório Financeiro Doméstico</h1>
+            <p>Gerado em ${new Date().toLocaleDateString('pt-BR')}</p>
+          </div>
+          
+          <div class="summary">
+            <div class="summary-grid">
+              <div class="summary-item">
+                <h3>Total Receitas</h3>
+                <div class="value income">R$ ${totalIncome.toFixed(2).replace('.', ',')}</div>
+              </div>
+              <div class="summary-item">
+                <h3>Total Despesas</h3>
+                <div class="value expense">R$ ${totalExpenses.toFixed(2).replace('.', ',')}</div>
+              </div>
+              <div class="summary-item">
+                <h3>Saldo Final</h3>
+                <div class="value balance">R$ ${balance.toFixed(2).replace('.', ',')}</div>
+              </div>
+            </div>
+          </div>
+      `;
+      
+      // Receitas
+      if (incomes.length > 0) {
+        html += `
+          <div class="section">
+            <h2>Receitas</h2>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Descrição</th>
+                  <th>Tipo</th>
+                  <th>Data</th>
+                  <th>Valor</th>
+                </tr>
+              </thead>
+              <tbody>
+        `;
+        
+        incomes.forEach(income => {
+          html += `
+            <tr>
+              <td>${income.name}</td>
+              <td>${incomeTypes[income.type].name}</td>
+              <td>${new Date(income.date).toLocaleDateString('pt-BR')}</td>
+              <td>R$ ${income.value.toFixed(2).replace('.', ',')}</td>
+            </tr>
+          `;
+        });
+        
+        html += `
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+      
+      // Despesas
+      if (expenses.length > 0) {
+        html += `
+          <div class="section">
+            <h2>Despesas</h2>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Descrição</th>
+                  <th>Categoria</th>
+                  <th>Data</th>
+                  <th>Valor</th>
+                </tr>
+              </thead>
+              <tbody>
+        `;
+        
+        expenses.forEach(expense => {
+          html += `
+            <tr>
+              <td>${expense.name}</td>
+              <td>${categories[expense.category].name}</td>
+              <td>${new Date(expense.date).toLocaleDateString('pt-BR')}</td>
+              <td>R$ ${expense.value.toFixed(2).replace('.', ',')}</td>
+            </tr>
+          `;
+        });
+        
+        html += `
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+      
+      html += `
+          <div class="footer">
+            <p>Relatório gerado pela Calculadora de Gastos Domésticos</p>
+          </div>
+        </body>
+        </html>
+      `;
+      
+      printWindow.document.write(html);
+      printWindow.document.close();
+      
+      setTimeout(() => {
+        printWindow.print();
+      }, 500);
+    }
+  </script>
+</body>
+</html>
