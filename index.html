@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8187845786002137"
+       crossorigin="anonymous"></script>
+  
   <!-- SEO Meta Tags -->
   <title>Calculadora de Gastos Domésticos - Controle Financeiro Familiar</title>
   <meta name="description" content="Calculadora gratuita para controlar gastos domésticos. Organize o orçamento familiar, divida contas e acompanhe despesas mensais facilmente." />
@@ -113,6 +117,21 @@
       color: rgba(255,255,255,0.9);
       font-size: 1.2rem;
       font-weight: 300;
+    }
+
+    /* AdSense Styles */
+    .ad-container {
+      margin: 20px 0;
+      text-align: center;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .ad-label {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 5px;
     }
 
     .calculator-card {
@@ -367,6 +386,7 @@
       text-align: center;
       color: white;
       box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      margin-bottom: 20px;
     }
 
     .donation-header h2 {
@@ -555,6 +575,17 @@
         <p class="subtitle">Organize seu orçamento familiar de forma simples e eficiente</p>
       </div>
 
+      <!-- AdSense Banner Topo -->
+      <div class="ad-container">
+        <div class="ad-label">Publicidade</div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-8187845786002137"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+      </div>
+
       <div class="calculator-card">
         <h2 class="section-title">Adicionar Despesa</h2>
         <div class="expense-form">
@@ -594,6 +625,16 @@
         <div id="expensesList" class="expenses-list">
           <p style="text-align: center; color: #666; font-style: italic;">Nenhuma despesa adicionada ainda</p>
         </div>
+      </div>
+
+      <!-- AdSense Retângulo Médio -->
+      <div class="ad-container">
+        <div class="ad-label">Publicidade</div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-8187845786002137"
+             data-ad-slot="2345678901"
+             data-ad-format="rectangle"></ins>
       </div>
 
       <div class="calculator-card">
@@ -687,6 +728,16 @@
     </div>
 
     <div class="sidebar">
+      <!-- AdSense Sidebar -->
+      <div class="ad-container">
+        <div class="ad-label">Publicidade</div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-8187845786002137"
+             data-ad-slot="3456789012"
+             data-ad-format="vertical"></ins>
+      </div>
+
       <div class="donation-card">
         <div class="donation-header">
           <h2>❤️ Apoie Este Projeto</h2>
@@ -716,6 +767,11 @@
   </div>
 
   <script>
+    // Inicializar AdSense
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    (adsbygoogle = window.adsbygoogle || []).push({});
+
     let expenses = [];
     let incomes = [];
     const categories = {
@@ -860,11 +916,11 @@
       const balance = totalIncome - totalExpenses;
 
       // Update displays
-      document.getElementById('totalExpenses').textContent = `R$ ${totalExpenses.toFixed(2).replace('.', ',')}`;;
-      document.getElementById('totalIncome').textContent = `R$ ${totalIncome.toFixed(2).replace('.', ',')}`;;
+      document.getElementById('totalExpenses').textContent = `R$ ${totalExpenses.toFixed(2).replace('.', ',')}`;
+      document.getElementById('totalIncome').textContent = `R$ ${totalIncome.toFixed(2).replace('.', ',')}`;
       
       const balanceElement = document.getElementById('finalBalance');
-      balanceElement.textContent = `R$ ${balance.toFixed(2).replace('.', ',')}`;;
+      balanceElement.textContent = `R$ ${balance.toFixed(2).replace('.', ',')}`;
       balanceElement.style.color = balance >= 0 ? '#4CAF50' : '#f44336';
 
       // Update category breakdown
